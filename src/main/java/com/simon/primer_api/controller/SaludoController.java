@@ -3,6 +3,7 @@ package com.simon.primer_api.controller;
 import com.simon.primer_api.model.Saludo;
 import com.simon.primer_api.service.SaludoService; // Importamos el servicio
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 public class SaludoController {
@@ -30,5 +31,9 @@ public class SaludoController {
         return saludoService.procesarSaludoRecibido(saludo);
     }
 
-    // (Puedes borrar el método antiguo de "saludoDefault" si quieres para limpiar, o dejarlo)
+    // Nuevo endpoint para ver todo lo que hemos guardado
+    @GetMapping("/saludo/historial")
+    public List<Saludo> verHistorial() {
+        return saludoService.obtenerTodosLosSaludos();
+    }
 }
