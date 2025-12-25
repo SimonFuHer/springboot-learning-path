@@ -1,37 +1,34 @@
 package com.simon.primer_api.controller;
 
 import com.simon.primer_api.model.Saludo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import com.simon.primer_api.service.SaludoService; // Importamos el servicio
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class SaludoController {
 
-    // 1. ESCENARIO A: Si ponen nombre
+    // 1. Declaramos que necesitamos al Chef
+    private final SaludoService saludoService;
+
+    // 2. CONSTRUCTOR: Spring verá esto y nos pasará el servicio automáticamente
+    public SaludoController(SaludoService saludoService) {
+        this.saludoService = saludoService;
+    }
+
+    // --- RUTAS ---
+
     @GetMapping("/saludo/{nombre}")
     public Saludo holaMundo(@PathVariable String nombre) {
-        return new Saludo("Hola " + nombre, "Simón", "¡Enhorabuena " + nombre + ", tu API ya responde dinámicamente!");
+        // YA NO creamos el objeto aquí con 'new'.
+        // Le pedimos al servicio que lo haga.
+        return saludoService.generarSaludo(nombre);
     }
 
-    // 2. ESCENARIO B: Si NO ponen nombre (El "Plan B")
-    @GetMapping("/saludo")
-    public Saludo saludoDefault() {
-        return new Saludo("Hola Desconocido", "Simón", "No me has dicho tu nombre, ¡pero te saludo igual!");
+    @PostMapping("/saludo")
+    public Saludo guardarSaludo(@RequestBody Saludo saludo) {
+        // Delegamos la lógica al servicio
+        return saludoService.procesarSaludoRecibido(saludo);
     }
 
-    // 1. @PostMapping: Indica que este método es para GUARDAR/CREAR
-    @org.springframework.web.bind.annotation.PostMapping("/saludo")
-    public Saludo guardarSaludo(@org.springframework.web.bind.annotation.RequestBody Saludo saludo) {
-
-        // 2. @RequestBody: Significa "Busca los datos dentro del paquete que te envían"
-
-        // Simulamos que guardamos el saludo en una base de datos...
-        // Y devolvemos el mismo objeto para confirmar que llegó bien.
-        return new Saludo(
-                "Recibido: " + saludo.getTitulo(),
-                saludo.getAutor(),
-                "Mensaje guardado correctamente en el servidor ✅"
-        );
-    }
+    // (Puedes borrar el método antiguo de "saludoDefault" si quieres para limpiar, o dejarlo)
 }
