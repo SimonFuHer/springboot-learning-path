@@ -19,4 +19,19 @@ public class SaludoController {
     public Saludo saludoDefault() {
         return new Saludo("Hola Desconocido", "Simón", "No me has dicho tu nombre, ¡pero te saludo igual!");
     }
+
+    // 1. @PostMapping: Indica que este método es para GUARDAR/CREAR
+    @org.springframework.web.bind.annotation.PostMapping("/saludo")
+    public Saludo guardarSaludo(@org.springframework.web.bind.annotation.RequestBody Saludo saludo) {
+
+        // 2. @RequestBody: Significa "Busca los datos dentro del paquete que te envían"
+
+        // Simulamos que guardamos el saludo en una base de datos...
+        // Y devolvemos el mismo objeto para confirmar que llegó bien.
+        return new Saludo(
+                "Recibido: " + saludo.getTitulo(),
+                saludo.getAutor(),
+                "Mensaje guardado correctamente en el servidor ✅"
+        );
+    }
 }

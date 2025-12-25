@@ -1,0 +1,9 @@
+### Enviar un saludo nuevo (POST)
+POST http://localhost:8080/saludo
+Content-Type: application/json
+
+{
+  "titulo": "Aprendiendo Spring",
+  "autor": "Simon",
+  "contenido": "Estoy enviando esto desde IntelliJ"
+}
