@@ -2,6 +2,7 @@ package com.simon.primer_api.controller;
 
 import com.simon.primer_api.model.Saludo;
 import com.simon.primer_api.service.SaludoService; // Importamos el servicio
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class SaludoController {
     }
 
     @PostMapping("/saludo")
-    public Saludo guardarSaludo(@RequestBody Saludo saludo) {
+    public Saludo guardarSaludo(@RequestBody @Valid Saludo saludo) {
         // Delegamos la lógica al servicio
         return saludoService.procesarSaludoRecibido(saludo);
     }
