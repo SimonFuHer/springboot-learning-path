@@ -1,38 +1,39 @@
 package com.simon.primer_api.service;
 
 import com.simon.primer_api.model.Saludo;
+import com.simon.primer_api.repository.SaludoRepository; // 🆕 Importamos el repositorio
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList; // 🆕 Importar lista
-import java.util.List;      // 🆕 Importar interfaz List
+import java.util.List;
 
 @Service
 public class SaludoService {
 
-    // 🆕 ESTO ES TU BASE DE DATOS DE MENTIRA
-    // Una lista que vive en la memoria RAM mientras la app está encendida.
-    private final List<Saludo> historial = new ArrayList<>();
+    // 1. Ya no usamos una lista en memoria (Adiós ArrayList 👋)
+    // private final List<Saludo> historial = new ArrayList<>();
+
+    // 2. Ahora inyectamos el REPOSITORIO
+    private final SaludoRepository saludoRepository;
+
+    public SaludoService(SaludoRepository saludoRepository) {
+        this.saludoRepository = saludoRepository;
+    }
+
+    // --- MÉTODOS ---
 
     public Saludo generarSaludo(String nombre) {
         return new Saludo("Hola " + nombre, "Simón", "Saludo generado al vuelo");
     }
 
-    // Modificamos este método para GUARDAR en la lista
     public Saludo procesarSaludoRecibido(Saludo saludo) {
-
-        // 🆕 1. Apuntamos el saludo en nuestra lista
-        historial.add(saludo);
-
-        // 🆕 2. Devolvemos confirmación
-        return new Saludo(
-                "Recibido y Guardado en Memoria",
-                saludo.getAutor(),
-                "Tu saludo es el número " + historial.size() + " en la lista temporal."
-        );
+        // 3. GUARDAR EN BASE DE DATOS REAL 💾
+        // El método .save() hace el INSERT en SQL automáticamente
+        return saludoRepository.save(saludo);
     }
 
-    // 🆕 Nuevo método para LEER la lista completa
     public List<Saludo> obtenerTodosLosSaludos() {
-        return historial;
+        // 4. LEER DE BASE DE DATOS REAL 📖
+        // El método .findAll() hace el SELECT * FROM automáticamente
+        return saludoRepository.findAll();
     }
 }
