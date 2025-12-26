@@ -37,4 +37,15 @@ public class SaludoController {
     public List<Saludo> verHistorial() {
         return saludoService.obtenerTodosLosSaludos();
     }
+
+    @DeleteMapping("/saludo/{id}")
+    public String borrarSaludo(@PathVariable Long id) {
+        saludoService.borrarSaludo(id);
+        return "El saludo con id " + id + " fue borrado correctamente";
+    }
+
+    @PutMapping("/saludo/{id}")
+    public Saludo actualizarSaludo(@PathVariable Long id, @RequestBody @Valid Saludo saludo) {
+        return saludoService.actualizarSaludo(id, saludo);
+    }
 }

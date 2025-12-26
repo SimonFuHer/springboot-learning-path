@@ -7,3 +7,16 @@ Content-Type: application/json
   "autor": "Simon",
   "contenido": "Estoy enviando esto desde IntelliJ"
 }
+
+### Borrar un saludo (Cambia el número 1 por un ID que exista)
+DELETE http://localhost:8080/saludo/7
+
+### Actualizar un saludo existente (PUT)
+PUT http://localhost:8080/saludo/2
+Content-Type: application/json
+
+{
+  "titulo": "Título Corregido",
+  "autor": "Simon el Editor",
+  "contenido": "He actualizado este contenido con PUT"
+}

@@ -36,4 +36,29 @@ public class SaludoService {
         // El método .findAll() hace el SELECT * FROM automáticamente
         return saludoRepository.findAll();
     }
+
+    // MÉTODOS PARA BORRAR
+    public void borrarSaludo(Long id) {
+        // El repositorio ya tiene un método mágico para esto
+        saludoRepository.deleteById(id);
+    }
+
+    // MÉTODOS PARA ACTUALIZAR (PUT)
+    public Saludo actualizarSaludo(Long id, Saludo saludoConNuevosDatos) {
+        // 1. Buscamos el saludo antiguo
+        // .orElse(null) significa: "Si no lo encuentras, devuélveme nulo"
+        Saludo saludoAntiguo = saludoRepository.findById(id).orElse(null);
+
+        if (saludoAntiguo != null) {
+            // 2. Si existe, actualizamos sus datos con los nuevos
+            saludoAntiguo.setTitulo(saludoConNuevosDatos.getTitulo());
+            saludoAntiguo.setAutor(saludoConNuevosDatos.getAutor());
+            saludoAntiguo.setContenido(saludoConNuevosDatos.getContenido());
+
+            // 3. Guardamos los cambios en la base de datos
+            return saludoRepository.save(saludoAntiguo);
+        } else {
+            return null; // Si no existe, no hacemos nada (por ahora)
+        }
+    }
 }

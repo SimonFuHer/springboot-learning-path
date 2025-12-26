@@ -42,4 +42,9 @@ public class Saludo {
     public String getTitulo() { return titulo; }
     public String getAutor() { return autor; }
     public String getContenido() { return contenido; }
+
+    // --- SETTERS (Para poder modificar los datos) ---
+    public void setTitulo(String titulo) { this.titulo = titulo; }
+    public void setAutor(String autor) { this.autor = autor; }
+    public void setContenido(String contenido) { this.contenido = contenido; }
 }
