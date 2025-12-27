@@ -3,16 +3,16 @@ POST http://localhost:8080/saludo
 Content-Type: application/json
 
 {
-  "titulo": "Aprendiendo Spring",
+  "titulo": "Hola MySQL",
   "autor": "Simon",
   "contenido": "Estoy enviando esto desde IntelliJ"
 }
 
 ### Borrar un saludo (Cambia el número 1 por un ID que exista)
-DELETE http://localhost:8080/saludo/7
+DELETE http://localhost:8080/saludo/2
 
 ### Actualizar un saludo existente (PUT)
-PUT http://localhost:8080/saludo/2
+PUT http://localhost:8080/saludo/1
 Content-Type: application/json
 
 {
